@@ -1,32 +1,32 @@
 const path = require('path')
 const express = require('express')
 const xss = require('xss')
-const FoldersService = require('./folders-service')
+const BooksService = require('./books-service')
 
-const foldersRouter = express.Router()
+const booksRouter = express.Router()
 const jsonParser = express.json()
 
-const serializeFolder = folder => ({
+const serializeBook = folder => ({
     id: folder.id,
     folder_name: xss(folder.folder_name),
 })
 
-foldersRouter
+booksRouter
     .route('/')
     .get((req, res, next) => {
-        FoldersService.getAllFolders(
+        BooksService.getAllBooks(
             req.app.get('db')
         )
-            .then(folders => {
-                res.json(folders)
+            .then(books => {
+                res.json(books)
             })
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
         const { folder_name } = req.body
-        const newFolder = { folder_name }
+        const newBook = { folder_name }
 
-        for (const [key, value] of Object.entries(newFolder)) {
+        for (const [key, value] of Object.entries(newBook)) {
             if (value == null) {
                 return res.status(400).json({
                     error: { message: `Missing '${key}' in request body` }
@@ -34,23 +34,23 @@ foldersRouter
             }
         }
 
-        FoldersService.insertFolder(
+        BooksService.insertBook(
             req.app.get('db'),
-            newFolder
+            newBook
         )
             .then(folder => {
                 res
                     .status(201)
                     .location(path.posix.join(req.originalUrl, `/${folder.id}`))
-                    .json(serializeFolder(folder))
+                    .json(serializeBook(folder))
             })
             .catch(next)
     })
 
-foldersRouter
+booksRouter
     .route('/:folder_id')
     .all((req, res, next) => {
-        FoldersService.getById(
+        BooksService.getById(
             req.app.get('db'),
             req.params.folder_id
         )
@@ -66,10 +66,10 @@ foldersRouter
             .catch(next)
     })
     .get((req, res, next) => {
-        res.json(serializeFolder(res.folder))
+        res.json(serializeBook(res.folder))
     })
     .delete((req, res, next) => {
-        FoldersService.deleteFolder(
+        BooksService.deleteBook(
             req.app.get('db'),
             req.params.folder_id
         )
@@ -79,4 +79,4 @@ foldersRouter
             .catch(next)
     })
 
-module.exports = foldersRouter
+module.exports = booksRouter
