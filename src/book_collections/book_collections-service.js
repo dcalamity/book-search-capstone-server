@@ -1,18 +1,18 @@
-const FoldersService = {
-    getAllFolders(knex) {
-        // console.log(knex)
-        return knex.select('*').from('noteful_folders')
+const bookCollectionsService = {
+    getAllBookCollections(knex) {
+        console.log("function called", knex)
+        return knex.select('*').from('book_collection')
     },
-    insertFolder(knex, newFolder) {
+    insertCollection(knex, payload) {
         return knex
-            .insert(newFolder)
-            .into('noteful_folders')
+            .insert(payload)
+            .into('book_collection')
             .returning('*')
             .then(rows => {
                 return rows[0]
             })
     },
-    deleteFolder(knex, id) {
+    deleteCollection(knex, id) {
         return knex('noteful_folders')
             .where({ id })
             .delete()
@@ -27,4 +27,4 @@ const FoldersService = {
     // },
 }
 
-module.exports = FoldersService
+module.exports = bookCollectionsService

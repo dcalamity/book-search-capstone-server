@@ -1,12 +1,12 @@
 const path = require('path')
 const express = require('express')
 const xss = require('xss')
-const BookCollectionsService = require('./book_collections-service')
+const bookCollectionsService = require('./book_collections-service')
 
 const bookCollectionsRouter = express.Router()
 const jsonParser = express.json()
 
-const serializeFolder = book_collection => ({
+const serializeCollection = book_collection => ({
     id: book_collection.id,
     book_collection_name: xss(book_collection.book_collection_name),
 })
@@ -14,7 +14,7 @@ const serializeFolder = book_collection => ({
 bookCollectionsRouter
     .route('/')
     .get((req, res, next) => {
-        BookCollectionsService.getAllBookCollections(
+        bookCollectionsService.getAllBookCollections(
             req.app.get('db')
         )
             .then(book_collections => {
@@ -23,10 +23,11 @@ bookCollectionsRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        const { book_collection_name } = req.body
-        const newFolder = { book_collection_name }
-
-        for (const [key, value] of Object.entries(newFolder)) {
+        const {user_id, book_collection_name } = req.body
+        const payload = {user_id, book_collection_name }
+        console.log("payload:", payload)
+        
+        for (const [key, value] of Object.entries(payload)) {
             if (value == null) {
                 return res.status(400).json({
                     error: { message: `Missing '${key}' in request body` }
@@ -34,15 +35,15 @@ bookCollectionsRouter
             }
         }
 
-        BookCollectionsService.insertFolder(
+        bookCollectionsService.insertCollection(
             req.app.get('db'),
-            newFolder
+            payload
         )
             .then(book_collection => {
                 res
                     .status(201)
                     .location(path.posix.join(req.originalUrl, `/${book_collection.id}`))
-                    .json(serializeFolder(book_collection))
+                    .json(serializeCollection(book_collection))
             })
             .catch(next)
     })
@@ -50,7 +51,7 @@ bookCollectionsRouter
 bookCollectionsRouter
     .route('/:book_collection_id')
     .all((req, res, next) => {
-        BookCollectionsService.getById(
+        bookCollectionsService.getById(
             req.app.get('db'),
             req.params.book_collection_id
         )
@@ -66,10 +67,10 @@ bookCollectionsRouter
             .catch(next)
     })
     .get((req, res, next) => {
-        res.json(serializeFolder(res.book_collection))
+        res.json(serializeCollection(res.book_collection))
     })
     .delete((req, res, next) => {
-        BookCollectionsService.deleteFolder(
+        bookCollectionsService.deleteCollection(
             req.app.get('db'),
             req.params.book_collection_id
         )
