@@ -45,7 +45,9 @@ BookCollectionsRouter
                     .location(path.posix.join(req.originalUrl, `/${book_collection.id}`))
                     .json(serializeCollection(book_collection))
             })
-            .catch(next)
+            .catch(err => {
+                console.log(err);
+            });
     })
 
 BookCollectionsRouter
