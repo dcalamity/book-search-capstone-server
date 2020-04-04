@@ -1,9 +1,9 @@
 const path = require('path')
 const express = require('express')
 const xss = require('xss')
-const bookCollectionsService = require('./book_collections-service')
+const BookCollectionsService = require('./book_collections-service')
 
-const bookCollectionsRouter = express.Router()
+const BookCollectionsRouter = express.Router()
 const jsonParser = express.json()
 
 const serializeCollection = book_collection => ({
@@ -11,10 +11,10 @@ const serializeCollection = book_collection => ({
     book_collection_name: xss(book_collection.book_collection_name),
 })
 
-bookCollectionsRouter
+BookCollectionsRouter
     .route('/')
     .get((req, res, next) => {
-        bookCollectionsService.getAllBookCollections(
+        BookCollectionsService.getAllBookCollections(
             req.app.get('db')
         )
             .then(book_collections => {
@@ -35,7 +35,7 @@ bookCollectionsRouter
             }
         }
 
-        bookCollectionsService.insertCollection(
+        BookCollectionsService.insertCollection(
             req.app.get('db'),
             payload
         )
@@ -48,7 +48,7 @@ bookCollectionsRouter
             .catch(next)
     })
 
-bookCollectionsRouter
+BookCollectionsRouter
     .route('/:book_collection_id')
     .all((req, res, next) => {
         bookCollectionsService.getById(
@@ -70,7 +70,7 @@ bookCollectionsRouter
         res.json(serializeCollection(res.book_collection))
     })
     .delete((req, res, next) => {
-        bookCollectionsService.deleteCollection(
+        BookCollectionsService.deleteCollection(
             req.app.get('db'),
             req.params.book_collection_id
         )
@@ -80,4 +80,4 @@ bookCollectionsRouter
             .catch(next)
     })
 
-module.exports = bookCollectionsRouter
+module.exports = BookCollectionsRouter

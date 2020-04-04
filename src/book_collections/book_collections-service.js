@@ -1,6 +1,6 @@
-const bookCollectionsService = {
+const BookCollectionsService = {
     getAllBookCollections(knex) {
-        console.log("function called", knex)
+        console.log(" get all function called", knex)
         return knex.select('*').from('book_collection')
     },
     insertCollection(knex, payload) {
@@ -27,4 +27,4 @@ const bookCollectionsService = {
     // },
 }
 
-module.exports = bookCollectionsService
+module.exports = BookCollectionsService
