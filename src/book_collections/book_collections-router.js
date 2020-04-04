@@ -8,7 +8,7 @@ const jsonParser = express.json()
 
 const serializeCollection = book_collection => ({
     id: book_collection.id,
-    book_collection_name: xss(book_collection.book_collection_name),
+    book_collection: xss(book_collection.book_collection),
 })
 
 BookCollectionsRouter
