@@ -23,8 +23,8 @@ BookCollectionsRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        const {user_id, book_collection_name } = req.body
-        const payload = {user_id, book_collection_name }
+        const {user_id, collection_name } = req.body
+        const payload = {user_id, collection_name }
         console.log("payload:", payload)
         
         for (const [key, value] of Object.entries(payload)) {
