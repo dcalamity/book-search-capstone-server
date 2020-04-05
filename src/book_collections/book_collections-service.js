@@ -9,7 +9,7 @@ const BookCollectionsService = {
             .into('book_collection')
             .returning('*')
             .then(rows => {
-                return rows[0]
+                return rows
             })
     },
     deleteCollection(knex, id) {
