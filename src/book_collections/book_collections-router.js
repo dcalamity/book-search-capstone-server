@@ -12,7 +12,7 @@ const serializeCollection = book_collection => ({
 })
 
 BookCollectionsRouter
-    .route('/')
+    .route('/all')
     .get((req, res, next) => {
         BookCollectionsService.getAllBookCollections(
             req.app.get('db')
