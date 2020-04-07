@@ -13,15 +13,15 @@ const BookCollectionsService = {
             })
     },
     deleteCollection(knex, id) {
-        return knex('noteful_folders')
+        return knex('book_collection')
             .where({ id })
             .delete()
     },
-    getById(knex, id) {
-        return knex.from('noteful_folders').select('*').where('id', id).first()
+    getById(knex, user_id) {
+        return knex.from('book_collection').select('*').where('user_id', user_id)
     },
     // updateFolder(knex, id, newFolderFields) {
-    //     return knex('noteful_folders')
+    //     return knex('book_collection')
     //         .where({ id })
     //         .update(newFolderFields)
     // },
