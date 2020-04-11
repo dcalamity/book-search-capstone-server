@@ -66,7 +66,7 @@ BookCollectionsRouter
                     })
                 }
                 console.log(book_collection, 'book_collection')
-                res.json(serializeCollection(res.book_collection))
+                res.json(book_collection)
                 // res.book_collection = book_collection // save the book_collection for the next middleware
                 next() // don't forget to call next so the next middleware happens!
             })
