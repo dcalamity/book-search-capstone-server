@@ -51,12 +51,12 @@ BookCollectionsRouter
     })
 
 BookCollectionsRouter
-    .route('/user/:user_id')
+    .route('/user/')
     .all((req, res, next) => {
         console.log(req.params.user_id, "req.params.user_id")
         bookCollectionsService.getById(
             req.app.get('db'),
-            req.params.user_id
+            1
         )
             .then(book_collection => {
                 console.log(book_collection, 'book_collection')
