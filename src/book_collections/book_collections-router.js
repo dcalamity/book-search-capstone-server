@@ -59,13 +59,15 @@ BookCollectionsRouter
             1
         )
             .then(book_collection => {
-                console.log(book_collection, 'book_collection')
+                
                 if (!book_collection) {
                     return res.status(404).json({
                         error: { message: `user_id doesn't exist` }
                     })
                 }
-                res.book_collection = book_collection // save the book_collection for the next middleware
+                console.log(book_collection, 'book_collection')
+                res.json(serializeCollection(res.book_collection))
+                // res.book_collection = book_collection // save the book_collection for the next middleware
                 next() // don't forget to call next so the next middleware happens!
             })
             .catch(next)
