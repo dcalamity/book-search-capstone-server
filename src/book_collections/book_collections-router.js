@@ -84,4 +84,37 @@ BookCollectionsRouter
             .catch(next)
     })
 
+    BookCollectionsRouter
+    .route('/user/:user_id/:id')
+    .all((req, res, next) => {
+        console.log(req.params.user_id, "req.params.user_id")
+        BookCollectionsService.getById(
+            req.app.get('db'),
+            req.params.user_id
+        )
+            .then(book_collection => {
+                console.log(book_collection, 'book_collection')
+                if (!book_collection) {
+                    return res.status(404).json({
+                        error: { message: `user_id doesn't exist` }
+                    })
+                }
+                res.json(book_collection)
+                next() 
+            })
+            .catch(next)
+    })
+    .get((req, res, next) => {
+        res.json(serializeCollection(res.book_collection))
+    })
+    .delete((req, res, next) => {
+        BookCollectionsService.deleteCollection(
+            req.app.get('db'),
+            req.params.id
+        )
+            .then(() => {
+                res.status(204).end()
+            })
+            .catch(next)
+    })
 module.exports = BookCollectionsRouter
