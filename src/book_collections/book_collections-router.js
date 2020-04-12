@@ -88,10 +88,10 @@ BookCollectionsRouter
     .route('/userid/:book_collection_id')
     .all((req, res, next) => {
         console.log('Route successful')
-        // console.log(req.params.user_id, "req.params.user_id")
+        console.log(req.params.user_id, "req.params.user_id")
         BookCollectionsService.getById(
             req.app.get('db'),
-            req.params.user_id
+            req.params.book_collection_id
         )
             .then(book_collection => {
                 console.log(book_collection, 'book_collection of then')
