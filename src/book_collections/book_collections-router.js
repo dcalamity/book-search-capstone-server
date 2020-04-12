@@ -93,7 +93,7 @@ BookCollectionsRouter
             req.params.user_id
         )
             .then(book_collection => {
-                console.log(book_collection, 'book_collection')
+                console.log(book_collection, 'book_collection of then')
                 if (!book_collection) {
                     return res.status(404).json({
                         error: { message: `user_id doesn't exist` }
