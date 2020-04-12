@@ -17,6 +17,11 @@ const BookCollectionsService = {
             .where({ id })
             .delete()
     },
+    deleteBookCollection(knex, book_collection_id) {
+        return knex('book_collection')
+            .where({ book_collection_id })
+            .delete()
+    },
     getById(knex, user_id) {
         return knex.from('book_collection').select('*').where('user_id', user_id)
     },

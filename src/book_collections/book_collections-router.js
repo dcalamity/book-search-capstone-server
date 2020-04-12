@@ -85,7 +85,7 @@ BookCollectionsRouter
     })
 
     BookCollectionsRouter
-    .route('/user/:user_id/:id')
+    .route('/user/:user_id/:book_collection_id')
     .all((req, res, next) => {
         console.log(req.params.user_id, "req.params.user_id")
         BookCollectionsService.getById(
@@ -108,9 +108,9 @@ BookCollectionsRouter
         res.json(serializeCollection(res.book_collection))
     })
     .delete((req, res, next) => {
-        BookCollectionsService.deleteCollection(
+        BookCollectionsService.deleteBookCollection(
             req.app.get('db'),
-            req.params.id
+            req.params.book_collection_id
         )
             .then(() => {
                 res.status(204).end()
