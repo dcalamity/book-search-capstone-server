@@ -12,7 +12,7 @@ const BookCollectionsService = {
                 return rows[0]
             })
     },
-    deleteCollectionByCollectionId(knex, id) {
+    deleteCollectionByCollectionId(knex, user_id) {
         return knex('book_collection')
             .where('user_id', user_id)
             .delete()
