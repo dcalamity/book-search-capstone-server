@@ -107,6 +107,24 @@ BookCollectionsRouter
     .get((req, res, next) => {
         res.json(serializeCollection(res.book_collection))
     })
+
+    .patch(jsonParser, (req, res, next) => {
+        const { id, collection_name } = req.body
+        const recordToUpdate = {collection_name}
+        console.log(id, 'collection_id')
+        console.log(collection_name, 'collection_name')
+        BookCollectionsService.updateCollectionByCollectionId(
+            req.app.get('db'),
+            req.params.collection_id,
+            recordToUpdate
+        )
+            .then(numRowsAffected => {
+                console.log(numRowsAffected, 'numRowsAffected')
+                res.status(204).end()
+            })
+            .catch(next)
+    })
+
     .delete((req, res, next) => {
         BookCollectionsService.deleteCollectionByCollectionId(
             req.app.get('db'),

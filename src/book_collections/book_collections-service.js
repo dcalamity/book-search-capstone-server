@@ -31,11 +31,11 @@ const BookCollectionsService = {
             .where('id', collection_id)
             .delete()
     },
-    // updateFolder(knex, id, newFolderFields) {
-    //     return knex('book_collection')
-    //         .where({ id })
-    //         .update(newFolderFields)
-    // },
+    updateCollectionByCollectionId(knex, id, recordToUpdate) {
+        return knex('book_collection')
+            .where({ id })
+            .update(recordToUpdate)
+    },
 }
 
 module.exports = BookCollectionsService
