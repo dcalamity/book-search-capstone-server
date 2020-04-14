@@ -1,4 +1,5 @@
 const BookCollectionsService = {
+    //ALL 
     getAllBookCollections(knex) {
         console.log(" get all function called", knex)
         return knex.select('*').from('book_collection')
@@ -12,7 +13,8 @@ const BookCollectionsService = {
                 return rows[0]
             })
     },
-    deleteCollectionByCollectionId(knex, user_id) {
+    //USER
+    deleteCollectionByUserId(knex, user_id) {
         return knex('book_collection')
             .where('user_id', user_id)
             .delete()
@@ -20,8 +22,14 @@ const BookCollectionsService = {
     getByUserId(knex, user_id) {
         return knex.from('book_collection').select('*').where('user_id', user_id)
     },
+    //COLLECTION
     getByCollectionId(knex, collection_id) {
         return knex.from('book_collection').select('*').where('id', collection_id)
+    },
+    deleteCollectionByCollectionId(knex, collection_id) {
+        return knex('book_collection')
+            .where('id', collection_id)
+            .delete()
     },
     // updateFolder(knex, id, newFolderFields) {
     //     return knex('book_collection')
