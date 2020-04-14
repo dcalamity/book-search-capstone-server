@@ -17,13 +17,11 @@ const BookCollectionsService = {
             .where('user_id', user_id)
             .delete()
     },
-    // deleteBookCollection(knex, book_collection_id) {
-    //     return knex('book_collection')
-    //         .where({ book_collection_id })
-    //         .delete()
-    // },
-    getById(knex, user_id) {
+    getByUserId(knex, user_id) {
         return knex.from('book_collection').select('*').where('user_id', user_id)
+    },
+    getByCollectionId(knex, collection_id) {
+        return knex.from('book_collection').select('*').where('collection_id', collection_id)
     },
     // updateFolder(knex, id, newFolderFields) {
     //     return knex('book_collection')
