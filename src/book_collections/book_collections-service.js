@@ -21,7 +21,7 @@ const BookCollectionsService = {
         return knex.from('book_collection').select('*').where('user_id', user_id)
     },
     getByCollectionId(knex, collection_id) {
-        return knex.from('book_collection').select('*').where('collection_id', collection_id)
+        return knex.from('book_collection').select('*').where('id', collection_id)
     },
     // updateFolder(knex, id, newFolderFields) {
     //     return knex('book_collection')
