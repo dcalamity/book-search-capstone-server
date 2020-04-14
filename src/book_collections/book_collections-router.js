@@ -74,9 +74,9 @@ BookCollectionsRouter
         res.json(serializeCollection(res.book_collection))
     })
     .delete((req, res, next) => {
-        BookCollectionsService.deleteCollection(
+        BookCollectionsService.deleteCollectionByCollectionId(
             req.app.get('db'),
-            req.params.book_collection_id
+            req.params.user_id
         )
             .then(() => {
                 res.status(204).end()
