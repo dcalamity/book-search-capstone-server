@@ -15,30 +15,38 @@ BookCollectionsRouter
     .route('/all')
     .get((req, res, next) => {
         BookCollectionsService.getAllBookCollections(
-            req.app.get('db')
-        )
+                req.app.get('db')
+            )
             .then(book_collections => {
                 res.json(book_collections)
             })
             .catch(next)
-    }) 
+    })
     .post(jsonParser, (req, res, next) => {
-        const {user_id, collection_name } = req.body
-        const payload = {user_id, collection_name }
+        const {
+            user_id,
+            collection_name
+        } = req.body
+        const payload = {
+            user_id,
+            collection_name
+        }
         console.log("payload:", payload)
-        
+
         for (const [key, value] of Object.entries(payload)) {
             if (value == null) {
                 return res.status(400).json({
-                    error: { message: `Missing '${key}' in request body` }
+                    error: {
+                        message: `Missing '${key}' in request body`
+                    }
                 })
             }
         }
 
         BookCollectionsService.insertCollection(
-            req.app.get('db'),
-            payload
-        )
+                req.app.get('db'),
+                payload
+            )
             .then(book_collection => {
                 res
                     .status(201)
@@ -55,18 +63,20 @@ BookCollectionsRouter
     .all((req, res, next) => {
         console.log(req.params.user_id, "req.params.user_id")
         BookCollectionsService.getByUserId(
-            req.app.get('db'),
-            req.params.user_id
-        )
+                req.app.get('db'),
+                req.params.user_id
+            )
             .then(book_collection => {
                 console.log(book_collection, 'book_collection')
                 if (!book_collection) {
                     return res.status(404).json({
-                        error: { message: `user_id doesn't exist` }
+                        error: {
+                            message: `user_id doesn't exist`
+                        }
                     })
                 }
                 res.json(book_collection)
-                next() 
+                next()
             })
             .catch(next)
     })
@@ -75,9 +85,9 @@ BookCollectionsRouter
     })
     .delete((req, res, next) => {
         BookCollectionsService.deleteCollectionByUserId(
-            req.app.get('db'),
-            req.params.user_id
-        )
+                req.app.get('db'),
+                req.params.user_id
+            )
             .then(() => {
                 res.status(204).end()
             })
@@ -86,38 +96,61 @@ BookCollectionsRouter
 
 BookCollectionsRouter
     .route('/collection/:collection_id')
-    .all((req, res, next) => {
+    // .all((req, res, next) => {
+    //     console.log(req.params.collection_id, "req.params.collection_id")
+    //     BookCollectionsService.getByCollectionId(
+    //         req.app.get('db'),
+    //         req.params.collection_id
+    //     )
+    //         .then(book_collection => {
+    //             console.log(book_collection, 'book_collection')
+    //             if (!book_collection) {
+    //                 return res.status(404).json({
+    //                     error: { message: `collection_id doesn't exist` }
+    //                 })
+    //             }
+    //             res.json(book_collection)
+    //             next() 
+    //         })
+    //         .catch(next)
+    // })
+    .get((req, res, next) => {
         console.log(req.params.collection_id, "req.params.collection_id")
         BookCollectionsService.getByCollectionId(
-            req.app.get('db'),
-            req.params.collection_id
-        )
+                req.app.get('db'),
+                req.params.collection_id
+            )
             .then(book_collection => {
                 console.log(book_collection, 'book_collection')
                 if (!book_collection) {
                     return res.status(404).json({
-                        error: { message: `collection_id doesn't exist` }
+                        error: {
+                            message: `collection_id doesn't exist`
+                        }
                     })
                 }
-                res.json(book_collection)
-                next() 
+                res.json(serializeCollection(res.book_collection))
+                // res.json(book_collection)
+                next()
             })
             .catch(next)
     })
-    .get((req, res, next) => {
-        res.json(serializeCollection(res.book_collection))
-    })
 
     .patch(jsonParser, (req, res, next) => {
-        const { id, collection_name } = req.body
-        const recordToUpdate = {collection_name}
+        const {
+            id,
+            collection_name
+        } = req.body
+        const recordToUpdate = {
+            collection_name
+        }
         console.log(id, 'collection_id patch')
         console.log(collection_name, 'collection_name patch')
         BookCollectionsService.updateCollectionByCollectionId(
-            req.app.get('db'),
-            req.params.collection_id,
-            recordToUpdate
-        )
+                req.app.get('db'),
+                req.params.collection_id,
+                recordToUpdate
+            )
             .then(numRowsAffected => {
                 console.log(numRowsAffected, 'numRowsAffected patch')
                 res.status(204).end()
@@ -127,9 +160,9 @@ BookCollectionsRouter
 
     .delete((req, res, next) => {
         BookCollectionsService.deleteCollectionByCollectionId(
-            req.app.get('db'),
-            req.params.collection_id
-        )
+                req.app.get('db'),
+                req.params.collection_id
+            )
             .then(() => {
                 res.status(204).end()
             })
