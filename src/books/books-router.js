@@ -14,6 +14,7 @@ const serializeBook = book => ({
 booksRouter
     .route('/books/all')
     .get((req, res, next) => {
+        console.log('shot')
         BooksService.getAllBooks(
             req.app.get('db')
         )
