@@ -4,7 +4,7 @@ const BooksService = {
         return knex.select('*').from('book')
     },
     getAllBooksByCollectionId(knex, collection_id) {
-        return knex.from('book').select('*').where('id', collection_id)
+        return knex.from('book').select('*').where('collection_id', collection_id)
     },
     insertBook(knex, newBook) {
         return knex
