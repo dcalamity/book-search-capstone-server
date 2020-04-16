@@ -12,7 +12,7 @@ const serializeBook = book => ({
 })
 
 booksRouter
-    .route('/books/all')
+    .route('/all')
     .get((req, res, next) => {
         console.log('shot')
         BooksService.getAllBooks(
