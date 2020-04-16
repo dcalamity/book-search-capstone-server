@@ -10,15 +10,31 @@ const serializeBook = book => ({
     id: book.id,
     book: xss(book.book),
 })
+//byCollectionId
+//showBooksByCollectionId
+//createByCollectionId
+
+//byBookId
+//getBookByBookId
+//updateByBookId
+//deleteByBookId
 
 booksRouter
-    .route('/all')
+    .route('/collection/:collection_id')
     .get((req, res, next) => {
         console.log('shot')
-        BooksService.getAllBooks(
-            req.app.get('db')
+        BooksService.getAllBooksByCollectionId(
+            req.app.get('db'),
+            req.params.collection_id
         )
             .then(books => {
+                if (!books) {
+                    return res.status(404).json({
+                        error: {
+                            message: `books don't exist`
+                        }
+                    })
+                }
                 res.json(books)
             })
             .catch(next)

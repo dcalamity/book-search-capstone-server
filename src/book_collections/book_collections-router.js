@@ -31,7 +31,7 @@ BookCollectionsRouter
             user_id,
             collection_name
         }
-        console.log("payload:", payload)
+        // console.log("payload:", payload)
 
         for (const [key, value] of Object.entries(payload)) {
             if (value == null) {
@@ -61,13 +61,13 @@ BookCollectionsRouter
 BookCollectionsRouter
     .route('/user/:user_id')
     .all((req, res, next) => {
-        console.log(req.params.user_id, "req.params.user_id")
+        // console.log(req.params.user_id, "req.params.user_id")
         BookCollectionsService.getByUserId(
                 req.app.get('db'),
                 req.params.user_id
             )
             .then(book_collection => {
-                console.log(book_collection, 'book_collection')
+                // console.log(book_collection, 'book_collection')
                 if (!book_collection) {
                     return res.status(404).json({
                         error: {
@@ -96,32 +96,15 @@ BookCollectionsRouter
 
 BookCollectionsRouter
     .route('/collection/:collection_id')
-    // .all((req, res, next) => {
-    //     console.log(req.params.collection_id, "req.params.collection_id")
-    //     BookCollectionsService.getByCollectionId(
-    //         req.app.get('db'),
-    //         req.params.collection_id
-    //     )
-    //         .then(book_collection => {
-    //             console.log(book_collection, 'book_collection')
-    //             if (!book_collection) {
-    //                 return res.status(404).json({
-    //                     error: { message: `collection_id doesn't exist` }
-    //                 })
-    //             }
-    //             res.json(book_collection)
-    //             next() 
-    //         })
-    //         .catch(next)
-    // })
+    
     .get((req, res, next) => {
-        console.log(req.params.collection_id, "req.params.collection_id")
+        // console.log(req.params.collection_id, "req.params.collection_id")
         BookCollectionsService.getByCollectionId(
                 req.app.get('db'),
                 req.params.collection_id
             )
             .then(book_collection => {
-                console.log(book_collection, 'book_collection')
+                // console.log(book_collection, 'book_collection')
                 if (!book_collection) {
                     return res.status(404).json({
                         error: {
@@ -130,7 +113,6 @@ BookCollectionsRouter
                     })
                 }
                 res.json(serializeCollection(res.book_collection))
-                // res.json(book_collection)
                 next()
             })
             .catch(next)
@@ -144,15 +126,15 @@ BookCollectionsRouter
         const recordToUpdate = {
             collection_name
         }
-        console.log(id, 'collection_id patch')
-        console.log(collection_name, 'collection_name patch')
+        // console.log(id, 'collection_id patch')
+        // console.log(collection_name, 'collection_name patch')
         BookCollectionsService.updateCollectionByCollectionId(
                 req.app.get('db'),
                 req.params.collection_id,
                 recordToUpdate
             )
             .then(numRowsAffected => {
-                console.log(numRowsAffected, 'numRowsAffected patch')
+                // console.log(numRowsAffected, 'numRowsAffected patch')
                 res.status(204).end()
             })
             .catch(next)

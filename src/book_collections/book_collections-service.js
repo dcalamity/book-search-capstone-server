@@ -1,7 +1,7 @@
 const BookCollectionsService = {
     //ALL 
     getAllBookCollections(knex) {
-        console.log(" get all function called", knex)
+        // console.log(" get all function called", knex)
         return knex.select('*').from('book_collection')
     },
     insertCollection(knex, payload) {
