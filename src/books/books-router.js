@@ -6,13 +6,13 @@ const BooksService = require('./books-service')
 const booksRouter = express.Router()
 const jsonParser = express.json()
 
-const serializeBook = folder => ({
-    id: folder.id,
-    folder_name: xss(folder.folder_name),
+const serializeBook = book => ({
+    id: book.id,
+    book: xss(book.book),
 })
 
 booksRouter
-    .route('/')
+    .route('/books/all')
     .get((req, res, next) => {
         BooksService.getAllBooks(
             req.app.get('db')

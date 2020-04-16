@@ -1,6 +1,6 @@
 const BooksService = {
     getAllBooks(knex) {
-        // console.log(knex)
+        console.log(knex)
         return knex.select('*').from('book')
     },
     insertBook(knex, newBook) {

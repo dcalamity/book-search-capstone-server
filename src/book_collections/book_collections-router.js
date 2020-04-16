@@ -21,7 +21,7 @@ BookCollectionsRouter
                 res.json(book_collections)
             })
             .catch(next)
-    })
+    }) 
     .post(jsonParser, (req, res, next) => {
         const {user_id, collection_name } = req.body
         const payload = {user_id, collection_name }
