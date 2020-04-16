@@ -23,6 +23,7 @@ booksRouter
     .route('/collection/:collection_id')
     .get((req, res, next) => {
         console.log('shot')
+        console.log('collectionID',req.param.collection_id)
         BooksService.getAllBooksByCollectionId(
             req.app.get('db'),
             req.params.collection_id
