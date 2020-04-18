@@ -15,9 +15,9 @@ const BooksService = {
                 return rows[0]
             })
     },
-    deleteBook(knex, id) {
+    deleteBookByBookId(knex, book_id) {
         return knex('book')
-            .where({ id })
+            .where( 'id', book_id )
             .delete()
     },
     getByBookId(knex, book_id) {

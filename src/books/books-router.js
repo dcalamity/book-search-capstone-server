@@ -68,7 +68,7 @@ booksRouter
 booksRouter
     .route('/book/:book_id')
     .get((req, res, next) => {
-        console.log(req.params.book_id, "req.params.book_id")
+        // console.log(req.params.book_id, "req.params.book_id")
         BooksService.getByBookId(
                 req.app.get('db'),
                 req.params.book_id
@@ -85,11 +85,33 @@ booksRouter
             })
             .catch(next)
     })
+
+    .patch(jsonParser, (req, res, next) => {
+        const {
+            id,
+            collection_name
+        } = req.body
+        const recordToUpdate = {
+            collection_name
+        }
+        // console.log(id, 'collection_id patch')
+        // console.log(collection_name, 'collection_name patch')
+        BookCollectionsService.updateCollectionByCollectionId(
+                req.app.get('db'),
+                req.params.collection_id,
+                recordToUpdate
+            )
+            .then(numRowsAffected => {
+                // console.log(numRowsAffected, 'numRowsAffected patch')
+                res.status(204).end()
+            })
+            .catch(next)
+    })
     
     .delete((req, res, next) => {
-        BooksService.deleteBook(
+        BooksService.deleteBookByBookId(
             req.app.get('db'),
-            req.params.folder_id
+            req.params.book_id
         )
             .then(() => {
                 res.status(204).end()
