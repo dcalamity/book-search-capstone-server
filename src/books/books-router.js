@@ -11,7 +11,7 @@ const serializeBook = book => ({
     book: xss(book.book),
 })
 //byCollectionId
-//showBooksByCollectionId
+//showBooksByCollectionId done
 //createByCollectionId
 
 //byBookId
