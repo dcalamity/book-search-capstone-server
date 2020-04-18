@@ -73,17 +73,15 @@ booksRouter
                 req.app.get('db'),
                 req.params.book_id
             )
-            .then(book => {
-                console.log(book, 'book')
-                if (!book) {
+            .then(books => {
+                if (!books) {
                     return res.status(404).json({
                         error: {
-                            message: `book doesn't exist`
+                            message: `books don't exist`
                         }
                     })
                 }
-                res.json(serializeCollection(res.book))
-                next()
+                res.json(books)
             })
             .catch(next)
     })
