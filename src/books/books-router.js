@@ -66,7 +66,7 @@ booksRouter
     })
 
 booksRouter
-    .route('/book/:book_id')
+    .route('/:book_id')
     .all((req, res, next) => {
         BooksService.getByBookId(
             req.app.get('db'),
