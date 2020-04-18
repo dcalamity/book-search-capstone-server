@@ -68,7 +68,7 @@ booksRouter
 booksRouter
     .route('/book/:book_id')
     .get((req, res, next) => {
-        console.log(req.params.collection_id, "req.params.collection_id")
+        console.log(req.params.book_id, "req.params.book_id")
         BooksService.getByBookId(
                 req.app.get('db'),
                 req.params.book_id
