@@ -15,7 +15,7 @@ const serializeBook = book => ({
 //createByCollectionId
 
 //byBookId
-//getBookByBookId
+//getBookByBookId done
 //updateByBookId
 //deleteByBookId
 
