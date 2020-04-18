@@ -21,7 +21,7 @@ const BooksService = {
             .delete()
     },
     getByBookId(knex, book_id) {
-        console.log(book_id, 'book id')
+        console.log(book_id, 'book_id')
         return knex.from('book').select('*').where('id', book_id)
     },
     // updateBook(knex, id, newBookFields) {

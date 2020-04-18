@@ -74,7 +74,7 @@ booksRouter
                 req.params.book_id
             )
             .then(book => {
-                // console.log(book_collection, 'book_collection')
+                console.log(book, 'book')
                 if (!book) {
                     return res.status(404).json({
                         error: {
