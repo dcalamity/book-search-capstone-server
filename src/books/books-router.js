@@ -66,20 +66,20 @@ booksRouter
     })
 
 booksRouter
-    .route('/:folder_id')
+    .route('/:book_id')
     .all((req, res, next) => {
-        BooksService.getById(
+        BooksService.getByBookId(
             req.app.get('db'),
-            req.params.folder_id
+            req.params.book_id
         )
-            .then(folder => {
-                if (!folder) {
+            .then(book => {
+                if (!book) {
                     return res.status(404).json({
-                        error: { message: `folder doesn't exist` }
+                        error: { message: `book doesn't exist` }
                     })
                 }
-                res.folder = folder // save the folder for the next middleware
-                next() // don't forget to call next so the next middleware happens!
+                // res.folder = folder // save the folder for the next middleware
+                // next() // don't forget to call next so the next middleware happens!
             })
             .catch(next)
     })

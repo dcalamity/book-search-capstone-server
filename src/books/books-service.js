@@ -20,8 +20,10 @@ const BooksService = {
             .where({ id })
             .delete()
     },
-    getById(knex, id) {
-        return knex.from('book').select('*').where('id', id).first()
+    getByBookId(knex, book_id) {
+        return knex('book')
+            .where('id', book_id)
+            .delete()
     },
     // updateBook(knex, id, newBookFields) {
     //     return knex('book')
