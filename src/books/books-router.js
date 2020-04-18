@@ -17,7 +17,7 @@ const serializeBook = book => ({
 //byBookId
 //getBookByBookId done
 //updateByBookId
-//deleteByBookId
+//deleteByBookId  done
 
 booksRouter
     .route('/collection/:collection_id')
@@ -41,28 +41,54 @@ booksRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        const { folder_name } = req.body
-        const newBook = { folder_name }
+        const {
+            collection_id,
+            finished,
+            title,
+            author,
+            genre,
+            isbn_id,
+            year_published,
+            description,
+            bookmark_page
+        } = req.body
 
-        for (const [key, value] of Object.entries(newBook)) {
+        const payload = {
+            collection_id,
+            finished,
+            title,
+            author,
+            genre,
+            isbn_id,
+            year_published,
+            description,
+            bookmark_page
+        }
+        // console.log("payload:", payload)
+
+        for (const [key, value] of Object.entries(payload)) {
             if (value == null) {
                 return res.status(400).json({
-                    error: { message: `Missing '${key}' in request body` }
+                    error: {
+                        message: `Missing '${key}' in request body`
+                    }
                 })
             }
         }
 
         BooksService.insertBook(
-            req.app.get('db'),
-            newBook
-        )
-            .then(folder => {
+                req.app.get('db'),
+                payload
+            )
+            .then(book => {
                 res
                     .status(201)
-                    .location(path.posix.join(req.originalUrl, `/${folder.id}`))
-                    .json(serializeBook(folder))
+                    .location(path.posix.join(req.originalUrl, `/${book.id}`))
+                    .json(serializeCollection(book))
             })
-            .catch(next)
+            .catch(err => {
+                console.log(err);
+            });
     })
 
 booksRouter
