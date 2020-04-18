@@ -67,25 +67,27 @@ booksRouter
 
 booksRouter
     .route('/book/:book_id')
-    .all((req, res, next) => {
+    .get((req, res, next) => {
+        // console.log(req.params.collection_id, "req.params.collection_id")
         BooksService.getByBookId(
-            req.app.get('db'),
-            req.params.book_id
-        )
+                req.app.get('db'),
+                req.params.book_id
+            )
             .then(book => {
+                // console.log(book_collection, 'book_collection')
                 if (!book) {
                     return res.status(404).json({
-                        error: { message: `book doesn't exist` }
+                        error: {
+                            message: `book doesn't exist`
+                        }
                     })
                 }
-                // res.folder = folder // save the folder for the next middleware
-                // next() // don't forget to call next so the next middleware happens!
+                res.json(serializeCollection(res.book))
+                next()
             })
             .catch(next)
     })
-    .get((req, res, next) => {
-        res.json(serializeBook(res.book))
-    })
+    
     .delete((req, res, next) => {
         BooksService.deleteBook(
             req.app.get('db'),
