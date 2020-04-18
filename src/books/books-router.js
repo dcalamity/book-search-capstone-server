@@ -84,7 +84,7 @@ booksRouter
             .catch(next)
     })
     .get((req, res, next) => {
-        res.json(serializeBook(res.folder))
+        res.json(serializeBook(res.book))
     })
     .delete((req, res, next) => {
         BooksService.deleteBook(
