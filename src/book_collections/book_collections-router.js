@@ -112,7 +112,7 @@ BookCollectionsRouter
                         }
                     })
                 }
-                res.json(serializeCollection(res.book_collection))
+                res.json(book_collection)
                 next()
             })
             .catch(next)
