@@ -12,7 +12,7 @@ const serializeBook = book => ({
 })
 //byCollectionId
 //showBooksByCollectionId done
-//createByCollectionId
+//createByCollectionId done
 
 //byBookId
 //getBookByBookId done
