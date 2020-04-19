@@ -84,7 +84,7 @@ booksRouter
                 res
                     .status(201)
                     .location(path.posix.join(req.originalUrl, `/${book.id}`))
-                    .json(serializeCollection(book))
+                    .json(book)
             })
             .catch(err => {
                 console.log(err);
