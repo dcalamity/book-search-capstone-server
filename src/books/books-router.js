@@ -64,7 +64,7 @@ booksRouter
             description,
             bookmark_page
         }
-        // console.log("payload:", payload)
+        console.log("payload:", payload)
 
         for (const [key, value] of Object.entries(payload)) {
             if (value == null) {
