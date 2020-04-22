@@ -3,7 +3,7 @@ const CommentsService = {
         // console.log(knex)
         return knex.select('*').from('noteful_folders')
     },
-    insertFolder(knex, newFolder) {
+    insertComment(knex, newFolder) {
         return knex
             .insert(newFolder)
             .into('noteful_folders')

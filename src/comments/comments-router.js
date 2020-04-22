@@ -12,6 +12,7 @@ const serializeComment = comment => ({
 })
 
 //searchCommentsByBookID
+//addCommentByBookId
 
 
 
@@ -31,8 +32,8 @@ commentsRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        const { comment_name } = req.body
-        const newComment = { comment_name }
+        const { book_comment, book_rating } = req.body
+        const newComment = { book_comment, book_rating }
 
         for (const [key, value] of Object.entries(newComment)) {
             if (value == null) {
@@ -52,7 +53,9 @@ commentsRouter
                     .location(path.posix.join(req.originalUrl, `/${comment.id}`))
                     .json(serializeComment(comment))
             })
-            .catch(next)
+            .catch(err => {
+                console.log(err);
+            });
     })
 
 commentsRouter
