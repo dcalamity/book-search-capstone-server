@@ -1,4 +1,4 @@
-const FoldersService = {
+const CommentsService = {
     getAllFolders(knex) {
         // console.log(knex)
         return knex.select('*').from('noteful_folders')
@@ -27,4 +27,4 @@ const FoldersService = {
     // },
 }
 
-module.exports = FoldersService
+module.exports = CommentsService
