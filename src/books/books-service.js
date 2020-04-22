@@ -6,10 +6,10 @@ const BooksService = {
     getAllBooksByCollectionId(knex, collection_id) {
         return knex.from('book').select('*').where('collection_id', collection_id)
     },
-    insertBook(knex, newComment) {
+    insertBook(knex, newBook) {
         return knex
-            .insert(newComment)
-            .into('comments')
+            .insert(newBook)
+            .into('book')
             .returning('*')
             .then(rows => {
                 return rows[0]
