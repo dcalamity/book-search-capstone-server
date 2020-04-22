@@ -24,11 +24,11 @@ const BooksService = {
         // console.log(book_id, 'book_id')
         return knex.from('book').select('*').where('id', book_id)
     },
-    // updateBook(knex, id, newBookFields) {
-    //     return knex('book')
-    //         .where({ id })
-    //         .update(newBookFields)
-    // },
+    updateBookByBookId(knex, id, newBookFields) {
+        return knex('book')
+            .where({ id })
+            .update(newBookFields)
+    },
 }
 
 module.exports = BooksService

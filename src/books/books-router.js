@@ -113,20 +113,37 @@ booksRouter
     .patch(jsonParser, (req, res, next) => {
         const {
             id,
-            collection_name
+            collection_id,
+            finished,
+            title,
+            author,
+            genre,
+            isbn_id,
+            year_published,
+            description,
+            bookmark_page
         } = req.body
         const recordToUpdate = {
-            collection_name
+            id,
+            collection_id,
+            finished,
+            title,
+            author,
+            genre,
+            isbn_id,
+            year_published,
+            description,
+            bookmark_page
         }
-        // console.log(id, 'collection_id patch')
-        // console.log(collection_name, 'collection_name patch')
-        BookCollectionsService.updateCollectionByCollectionId(
+        console.log(id, 'collection_id patch')
+        console.log(recordToUpdate, 'recordToUpdate patch')
+        BooksService.updateBookByBookId(
                 req.app.get('db'),
-                req.params.collection_id,
+                req.params.book_id,
                 recordToUpdate
             )
             .then(numRowsAffected => {
-                // console.log(numRowsAffected, 'numRowsAffected patch')
+                console.log(numRowsAffected, 'numRowsAffected patch')
                 res.status(204).end()
             })
             .catch(next)
