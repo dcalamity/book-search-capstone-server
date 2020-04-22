@@ -17,7 +17,7 @@ const serializeComment = comment => ({
 
 
 commentsRouter
-    .route('/comment/book_id')
+    .route('/comment/:book_id')
     .get((req, res, next) => {
         console.log('get by book id shot')
         console.log("req.params.book_id")
