@@ -86,9 +86,7 @@ booksRouter
                     .location(path.posix.join(req.originalUrl, `/${book.id}`))
                     .json(book)
             })
-            .catch(err => {
-                console.log(err);
-            });
+            .catch(next)
     })
 
 booksRouter
