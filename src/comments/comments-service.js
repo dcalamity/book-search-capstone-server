@@ -17,8 +17,8 @@ const FoldersService = {
             .where({ id })
             .delete()
     },
-    getById(knex, id) {
-        return knex.from('noteful_folders').select('*').where('id', id).first()
+    getCommentsByBookID(knex, book_id) {
+        return knex.from('comments').select('*').where('book_id', book_id)
     },
     // updateFolder(knex, id, newFolderFields) {
     //     return knex('noteful_folders')

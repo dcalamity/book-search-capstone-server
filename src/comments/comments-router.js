@@ -11,11 +11,19 @@ const serializeComment = comment => ({
     comment_name: xss(comment.comment_name),
 })
 
+//searchCommentsByBookID
+
+
+
+
 commentsRouter
-    .route('/')
+    .route('/comment/book_id')
     .get((req, res, next) => {
-        CommentsService.getAllComments(
-            req.app.get('db')
+        console.log('get by book id shot')
+        console.log("req.params.book_id")
+        CommentsService.getCommentsByBookID(
+            req.app.get('db'),
+            req.params.book_id
         )
             .then(comments => {
                 res.json(comments)
