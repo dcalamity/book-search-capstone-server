@@ -16,7 +16,7 @@ const serializeBook = book => ({
 
 //byBookId
 //getBookByBookId done
-//updateByBookId
+//updateByBookId done
 //deleteByBookId  done
 
 booksRouter
