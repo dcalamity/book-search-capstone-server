@@ -80,7 +80,6 @@ booksRouter
 
         BooksService.insertBook(
                 req.app.get('db'),
-                req.params.collection_id,
                 payload
             )
             .then(book => {
