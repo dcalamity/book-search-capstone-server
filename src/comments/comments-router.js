@@ -33,8 +33,8 @@ commentsRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        const { book_comment, book_rating } = req.body
-        const newComment = { book_comment, book_rating }
+        const { book_id, book_comment } = req.body
+        const newComment = { book_id, book_comment }
 
         for (const [key, value] of Object.entries(newComment)) {
             if (value == null) {

@@ -3,9 +3,9 @@ const CommentsService = {
         // console.log(knex)
         return knex.select('*').from('noteful_folders')
     },
-    insertComment(knex, comment) {
+    insertComment(knex, newComment) {
         return knex
-            .insert(comment)
+            .insert(newComment)
             .into('comments')
             .returning('*')
             .then(rows => {
