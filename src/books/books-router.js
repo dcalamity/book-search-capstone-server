@@ -145,7 +145,7 @@ booksRouter
         console.log(recordToUpdate, 'recordToUpdate patch')
         BooksService.updateBookByBookId(
                 req.app.get('db'),
-                req.params.book_id,
+                // req.params.book_id,
                 recordToUpdate
             )
             .then(numRowsAffected => {
