@@ -11,8 +11,8 @@ const serializeComment = comment => ({
     comment_name: xss(comment.comment_name),
 })
 
-//searchCommentsByBookID
-//addCommentByBookId
+//searchCommentsByBookID done
+//addCommentByBookId done 
 //deleteByCommentId
 
 
@@ -59,32 +59,35 @@ commentsRouter
             });
     })
 
+    
+
 commentsRouter
-    .route('/:comment_id')
-    .all((req, res, next) => {
-        CommentsService.getById(
-            req.app.get('db'),
-            req.params.comment_id
-        )
-            .then(comment => {
-                if (!comment) {
-                    return res.status(404).json({
-                        error: { message: `comment doesn't exist` }
-                    })
-                }
-                res.comment = comment // save the comment for the next middleware
-                next() // don't forget to call next so the next middleware happens!
-            })
-            .catch(next)
-    })
+    .route('/comment/:comment_id')
+    // .all((req, res, next) => {
+    //     CommentsService.getById(
+    //         req.app.get('db'),
+    //         req.params.comment_id
+    //     )
+    //         .then(comment => {
+    //             if (!comment) {
+    //                 return res.status(404).json({
+    //                     error: { message: `comment doesn't exist` }
+    //                 })
+    //             }
+    //             res.comment = comment // save the comment for the next middleware
+    //             next() // don't forget to call next so the next middleware happens!
+    //         })
+    //         .catch(next)
+    // })
     .get((req, res, next) => {
         res.json(serializeComment(res.comment))
     })
     .delete((req, res, next) => {
-        CommentsService.deleteComment(
-            req.app.get('db'),
-            req.params.comment_id
-        )
+        console.log('delete by comment id called')
+        CommentsService.deleteByCommentsId(
+                req.app.get('db'),
+                req.params.comment_id
+            )
             .then(() => {
                 res.status(204).end()
             })

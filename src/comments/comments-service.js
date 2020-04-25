@@ -16,9 +16,9 @@ const CommentsService = {
         return knex.from('comments').select('*').where('book_id', book_id)
     },
 
-    deleteFolder(knex, id) {
-        return knex('noteful_folders')
-            .where({ id })
+    deleteByCommentsId(knex, comment_id) {
+        return knex('comments')
+            .where('id', comment_id)
             .delete()
     },
     getCommentsByBookID(knex, book_id) {
