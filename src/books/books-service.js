@@ -7,6 +7,8 @@ const BooksService = {
         return knex.from('book').select('*').where('collection_id', collection_id)
     },
     insertBook(knex, newBook) {
+        console.log('knex:', knex)
+        console.log('newBook:', newBook)
         return knex
             .insert(newBook)
             .into('book')
