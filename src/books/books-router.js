@@ -123,8 +123,10 @@ booksRouter
             isbn_id,
             year_published,
             description,
-            bookmark_page
+            bookmark_page,
+            book_rating
         } = req.body
+        
         const recordToUpdate = {
             id,
             collection_id,
@@ -135,7 +137,8 @@ booksRouter
             isbn_id,
             year_published,
             description,
-            bookmark_page
+            bookmark_page,
+            book_rating
         }
         console.log(id, 'collection_id patch')
         console.log(recordToUpdate, 'recordToUpdate patch')
