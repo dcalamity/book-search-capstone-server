@@ -50,7 +50,8 @@ booksRouter
             isbn_id,
             year_published,
             description,
-            bookmark_page
+            bookmark_page, 
+            book_rating
         } = req.body
 
         const payload = {
@@ -62,7 +63,8 @@ booksRouter
             isbn_id,
             year_published,
             description,
-            bookmark_page
+            bookmark_page, 
+            book_rating
         }
         console.log("payload:", payload)
 
