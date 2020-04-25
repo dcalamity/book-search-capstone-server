@@ -13,7 +13,7 @@ const serializeComment = comment => ({
 
 //searchCommentsByBookID done
 //addCommentByBookId done 
-//deleteByCommentId
+//deleteByCommentId done
 
 
 
