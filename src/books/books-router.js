@@ -126,7 +126,7 @@ booksRouter
             bookmark_page,
             book_rating
         } = req.body
-        
+
         const recordToUpdate = {
             id,
             collection_id,
@@ -144,7 +144,6 @@ booksRouter
         console.log(recordToUpdate, 'recordToUpdate patch')
         BooksService.updateBookByBookId(
                 req.app.get('db'),
-                req.params.book_id,
                 recordToUpdate
             )
             .then(numRowsAffected => {
