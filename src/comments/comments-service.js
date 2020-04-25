@@ -12,6 +12,10 @@ const CommentsService = {
                 return rows[0]
             })
     },
+    getCommentsByBookID(knex, book_id){
+        return knex.from('comments').select('*').where('book_id', book_id)
+    },
+
     deleteFolder(knex, id) {
         return knex('noteful_folders')
             .where({ id })
