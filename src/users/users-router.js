@@ -1,79 +1,91 @@
-const path = require('path')
 const express = require('express')
-const xss = require('xss')
-const usersService = require('./users-service')
-
+const path = require('path')
 const usersRouter = express.Router()
-const jsonParser = express.json()
+const jsonBodyParser = express.json()
+const UsersService = require('./users-service')
 
-const serializeUser = user => ({
-    id: user.id,
-    user_name: xss(user.user_name),
-})
 
+// All users
 usersRouter
     .route('/')
     .get((req, res, next) => {
-        usersService.getAllusers(
-            req.app.get('db')
-        )
-            .then(users => {
-                res.json(users)
-            })
-            .catch(next)
+        UsersService.getAllUsers(req.app.get('db'))
+        .then(user => {
+            res.json(users.map(UsersService.serializeUser(user)))
+        })
+        .catch(next)
     })
-    .post(jsonParser, (req, res, next) => {
-        const { user_name } = req.body
-        const newUser = { user_name }
-
-        for (const [key, value] of Object.entries(newUser)) {
-            if (value == null) {
+    .post(jsonBodyParser, (req, res, next) => {
+        const { first_name, last_name, user_name, email, password } = req.body
+        for (const field of ['first_name', 'last_name', 'user_name', 'email', 'password'])
+            if (!req.body[field])
                 return res.status(400).json({
-                    error: { message: `Missing '${key}' in request body` }
+                    error: `Missing '${field}' in request body`
                 })
-            }
-        }
+        const passwordError = UsersService.validatePassword(password)
 
-        usersService.insertUser(
+        if (passwordError)
+            return res.status(400).json({ error: passwordError })
+
+        UsersService.hasUserWithUserName(
             req.app.get('db'),
-            newUser
+            email
         )
-            .then(user => {
-                res
-                    .status(201)
-                    .location(path.posix.join(req.originalUrl, `/${user.id}`))
-                    .json(serializeUser(user))
+            .then(hasUserWithUserName => {
+                if (hasUserWithUserName)
+                    return res.status(400).json({ error: `Username already taken` })
+
+                return UsersService.hashPassword(password)
+                    .then(hashedPassword => {
+                        const newUser = {
+                            first_name,
+                            last_name,
+                            user_name,
+                            email,
+                            password: hashedPassword,
+                        }
+                        return UsersService.insertUser(
+                            req.app.get('db'),
+                            newUser
+                        )
+                            .then(user => {
+                                res
+                                    .status(201)
+                                    .location(path.posix.join(req.originalUrl, `/${user.id}`))
+                                    .json(UsersService.serializeUser(user))
+                            })
+                    })
             })
             .catch(next)
     })
 
+// Individual users by id
 usersRouter
     .route('/:user_id')
     .all((req, res, next) => {
-        usersService.getById(
-            req.app.get('db'),
-            req.params.user_id
-        )
+        const { user_id } = req.params;
+        UsersService.getById(req.app.get('db'), user_id)
             .then(user => {
                 if (!user) {
-                    return res.status(404).json({
-                        error: { message: `user doesn't exist` }
-                    })
+                    return res
+                        .status(404)
+                        .send({ error: { message: `User doesn't exist.` } })
                 }
-                res.user = user // save the user for the next middleware
-                next() // don't forget to call next so the next middleware happens!
+                res.user = user
+                next()
             })
             .catch(next)
     })
-    .get((req, res, next) => {
-        res.json(serializeUser(res.user))
+    .get((req, res) => {
+        res.json(UsersService.serializeUser(res.user))
     })
     .delete((req, res, next) => {
-        usersService.deleteUser(
+        const { user_id } = req.params;
+        UsersService.deleteUser(
             req.app.get('db'),
-            req.params.user_id
+            user_id
         )
-            .then(() => {
+            .then(numRowsAffected => {
                 res.status(204).end()
             })
             .catch(next)
