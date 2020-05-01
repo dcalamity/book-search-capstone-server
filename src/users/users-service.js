@@ -5,18 +5,16 @@ const UsersService = {
     serializeUser(user) {
         return {
             id: user.id,
-            first_name: xss(user.first_name),
-            last_name: xss(user.last_name),
             user_name: xss(user.user_name),
             email: xss(user.email),
             date_created: new Date(user.date_created),
         }
     },
     getAllUsers(knex) {
-        return knex.select('*').from('museum_users')
+        return knex.select('*').from('users')
     },
     hasUserWithUserName(db, email) {
-        return db('museum_users')
+        return db('users')
             .where({ email })
             .first()
             .then(user => !!user)
@@ -24,7 +22,7 @@ const UsersService = {
     insertUser(db, newUser) {
         return db
             .insert(newUser)
-            .into('museum_users')
+            .into('users')
             .returning('*')
             .then(([user]) => user)
     },
@@ -43,13 +41,13 @@ const UsersService = {
         return bcrypt.hash(password, 12)
     },
     deleteUser(knex, id) {
-        return knex('museum_users')
+        return knex('users')
             .where({ id })
             .delete()
     },
     getById(knex, id) {
         return knex
-            .from('museum_users')
+            .from('users')
             .select('*')
             .where('id', id)
             .first()

@@ -16,8 +16,8 @@ usersRouter
         .catch(next)
     })
     .post(jsonBodyParser, (req, res, next) => {
-        const { first_name, last_name, user_name, email, password } = req.body
-        for (const field of ['first_name', 'last_name', 'user_name', 'email', 'password'])
+        const { user_name, email, password } = req.body
+        for (const field of ['user_name', 'email', 'password'])
             if (!req.body[field])
                 return res.status(400).json({
                     error: `Missing '${field}' in request body`
@@ -38,8 +38,6 @@ usersRouter
                 return UsersService.hashPassword(password)
                     .then(hashedPassword => {
                         const newUser = {
-                            first_name,
-                            last_name,
                             user_name,
                             email,
                             password: hashedPassword,
