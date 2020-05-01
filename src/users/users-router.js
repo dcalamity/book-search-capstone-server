@@ -16,8 +16,8 @@ usersRouter
         .catch(next)
     })
     .post(jsonBodyParser, (req, res, next) => {
-        const { user_name, email, password } = req.body
-        for (const field of ['user_name', 'email', 'password'])
+        const { user_name, password } = req.body
+        for (const field of ['user_name', 'password'])
             if (!req.body[field])
                 return res.status(400).json({
                     error: `Missing '${field}' in request body`
@@ -29,7 +29,7 @@ usersRouter
 
         UsersService.hasUserWithUserName(
             req.app.get('db'),
-            email
+            user_name
         )
             .then(hasUserWithUserName => {
                 if (hasUserWithUserName)
@@ -39,7 +39,6 @@ usersRouter
                     .then(hashedPassword => {
                         const newUser = {
                             user_name,
-                            email,
                             password: hashedPassword,
                         }
                         return UsersService.insertUser(

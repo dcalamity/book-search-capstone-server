@@ -6,16 +6,14 @@ const UsersService = {
         return {
             id: user.id,
             user_name: xss(user.user_name),
-            email: xss(user.email),
-            date_created: new Date(user.date_created),
         }
     },
     getAllUsers(knex) {
         return knex.select('*').from('users')
     },
-    hasUserWithUserName(db, email) {
+    hasUserWithUserName(db, user_name) {
         return db('users')
-            .where({ email })
+            .where({ user_name })
             .first()
             .then(user => !!user)
     },
