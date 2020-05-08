@@ -3,9 +3,9 @@ const jwt = require('jsonwebtoken')
 const config = require('../config')
 
 const AuthService = {
-    getUserWithUserName(db, user_name) {
+    getUserWithUserName(db, userName) {
         return db('users')
-            .where({ user_name })
+            .where({ userName })
             .first()
     },
     comparePasswords(password, hash) {
