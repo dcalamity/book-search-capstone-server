@@ -39,10 +39,13 @@ authRouter
               return res.status(400).json({
                 error: 'Incorrect email or password',
               })
+              
             const sub = dbUser.userName
             const payload = {
               user_id: dbUser.id
             }
+            console.log('sub:', sub)
+            console.log("payload:", payload)
             res.send({
               authToken: AuthService.createJwt(sub, payload),
               userId: dbUser.id
