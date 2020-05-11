@@ -44,6 +44,7 @@ authRouter
             const payload = {
               user_id: dbUser.id
             }
+            console.log("dbUser:", dbUser)
             console.log('sub:', sub)
             console.log("payload:", payload)
             res.send({
