@@ -41,6 +41,7 @@ booksRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
+        console.log('shot twice')
         const {
             collection_id,
             finished,

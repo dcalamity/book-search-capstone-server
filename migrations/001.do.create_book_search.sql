@@ -23,7 +23,8 @@ CREATE TABLE book (
     year_published INTEGER NOT NULL,
     description TEXT NOT NULL,
     bookmark_page INTEGER NOT NULL,
-    book_rating INTEGER NOT NULL
+    book_rating INTEGER NOT NULL,
+    img VARCHAR (255) NOT NULL
 );
 
 CREATE TABLE comments (
