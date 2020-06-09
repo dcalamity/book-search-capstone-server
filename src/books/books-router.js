@@ -41,7 +41,7 @@ booksRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        console.log('shot twice')
+        
         const {
             collection_id,
             finished,
@@ -52,7 +52,8 @@ booksRouter
             year_published,
             description,
             bookmark_page, 
-            book_rating
+            book_rating, 
+            img
         } = req.body
 
         const payload = {
@@ -65,7 +66,8 @@ booksRouter
             year_published,
             description,
             bookmark_page, 
-            book_rating
+            book_rating,
+            img
         }
         console.log("payload:", payload)
 
@@ -126,7 +128,8 @@ booksRouter
             year_published,
             description,
             bookmark_page,
-            book_rating
+            book_rating,
+            img
         } = req.body
         
         const recordToUpdate = {
@@ -140,7 +143,8 @@ booksRouter
             year_published,
             description,
             bookmark_page,
-            book_rating
+            book_rating,
+            img
         }
         console.log(id, 'collection_id patch')
         console.log(recordToUpdate, 'recordToUpdate patch')
