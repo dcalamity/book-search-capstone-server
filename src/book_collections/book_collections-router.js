@@ -98,7 +98,7 @@ BookCollectionsRouter
     .route('/collection/:collection_id')
     
     .get((req, res, next) => {
-        console.log(req.params.collection_id, "req.params.collection_id")
+        // console.log(req.params.collection_id, "req.params.collection_id")
         BookCollectionsService.getByCollectionId(
                 req.app.get('db'),
                 req.params.collection_id
