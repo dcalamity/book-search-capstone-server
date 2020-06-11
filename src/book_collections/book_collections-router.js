@@ -104,7 +104,7 @@ BookCollectionsRouter
                 req.params.collection_id
             )
             .then(book_collection => {
-                // console.log(book_collection, 'book_collection')
+                console.log(book_collection, 'book_collection')
                 if (!book_collection) {
                     return res.status(404).json({
                         error: {
@@ -141,6 +141,7 @@ BookCollectionsRouter
     })
 
     .delete((req, res, next) => {
+        console.log('delete called')
         BookCollectionsService.deleteCollectionByCollectionId(
                 req.app.get('db'),
                 req.params.collection_id

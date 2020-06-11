@@ -35,16 +35,16 @@ CREATE TABLE comments (
     date_created TIMESTAMP DEFAULT now() NOT NULL
 );
 
-INSERT INTO public.users (user_name,"password") VALUES 
-('admin','admin')
-,('user','user')
-,('log','log')
-,('sandra','sandra')
-;
+-- INSERT INTO public.users (user_name,"password") VALUES 
+-- ('admin','admin')
+-- ,('user','user')
+-- ,('log','log')
+-- ,('sandra','sandra')
+-- ;
 
-INSERT INTO public.book_collection (user_id,collection_name) VALUES 
-(4,'Romance')
-,(2,'Science and Robots')
-,(1,'Healthcare')
-,(3,'Sea Animals')
-;
+-- INSERT INTO public.book_collection (user_id,collection_name) VALUES 
+-- (4,'Romance')
+-- ,(2,'Science and Robots')
+-- ,(1,'Healthcare')
+-- ,(3,'Sea Animals')
+-- ;
