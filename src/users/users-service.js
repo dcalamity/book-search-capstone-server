@@ -24,7 +24,6 @@ const UsersService = {
             .into('users')
             .returning('*')
             .then(([user]) => user)
-            .json(UsersService.serializeUser(user))
     },
     validatePassword(password) {
         if (password.length < 6) {
